@@ -4,35 +4,36 @@ import Constants from 'expo-constants';
 export default StyleSheet.create({
   background: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
 
   container: {
     flex: 1,
     justifyContent: 'space-around',
     paddingHorizontal: 42,
-    paddingVertical: Constants.statusBarHeight + 20
+    paddingVertical: Constants.statusBarHeight + 20,
   },
 
   title: {
     fontSize: 96,
     fontFamily: 'Bangers',
     textAlign: 'center',
-    color: '#F8F6F6'
+    color: '#F8F6F6',
   },
 
-  input: {
+  inputIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
     height: 52,
-    backgroundColor: '#F8F6F6',
     borderRadius: 10,
     borderColor: '#000',
     borderWidth: 1.5,
-    padding: 10
+    padding: 10,
   },
 
-  inputText: {
-    fontSize: 90,
-    fontFamily: 'Abel'
+  input: {
+    flex: 1,
   },
 
   button: {
@@ -43,25 +44,34 @@ export default StyleSheet.create({
     borderWidth: 1.5,
     padding: 10,
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
   },
 
   buttonText: {
     color: '#000',
     fontSize: 15,
     textAlign: 'center',
-    fontFamily: 'Abel'
+    fontFamily: 'Abel',
   },
 
-  textOr: {
+  facebookButton: {
+    height: 52,
+    borderColor: '#000',
+    padding: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+
+  buttonFacebookText: {
     color: '#F8F6F6',
+    fontSize: 15,
+    textAlign: 'center',
     fontFamily: 'Abel',
-    textAlign: 'center'
   },
 
   link: {
     color: '#F8F6F6',
     fontFamily: 'Abel',
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
