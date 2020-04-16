@@ -1,18 +1,11 @@
 /* eslint-disable no-undef */
 import React from 'react';
-import {
-  ImageBackground,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useFonts } from '@use-expo/font';
 
+import Background from '../../components/Background';
 import styles from './styles';
-
-import back from '../../assets/back.png';
 
 export default function Login({ navigation }) {
   let [isLoadFonts] = useFonts({
@@ -24,7 +17,7 @@ export default function Login({ navigation }) {
     return <Text>Fontes não carregaram</Text>;
   } else {
     return (
-      <ImageBackground source={back} style={styles.background}>
+      <Background>
         <View style={styles.container}>
           <Text style={styles.title}>Trade Madden</Text>
 
@@ -79,7 +72,7 @@ export default function Login({ navigation }) {
             <Text style={styles.link}>Não tem conta? Crie aqui</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </Background>
     );
   }
 }

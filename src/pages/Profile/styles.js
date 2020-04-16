@@ -7,7 +7,6 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     paddingHorizontal: 42,
     paddingVertical: Constants.statusBarHeight + 20,
-    backgroundColor: '#118DF0',
   },
 
   title: {
