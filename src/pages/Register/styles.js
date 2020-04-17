@@ -1,59 +1,48 @@
-import { StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
+import { Platform } from 'react-native';
+import styled from 'styled-components/native';
 
-export default StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-around',
-    paddingHorizontal: 42,
-    paddingVertical: Constants.statusBarHeight + 20,
-  },
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
-  title: {
-    fontSize: 48,
-    fontFamily: 'Bangers',
-    textAlign: 'center',
-    color: '#F8F6F6',
-  },
+export const Container = styled.KeyboardAvoidingView.attrs({
+  enabled: Platform.OS === 'ios',
+  behavior: 'padding',
+})`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 0 30px;
+`;
 
-  inputIcon: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    height: 52,
-    borderRadius: 10,
-    borderColor: '#000',
-    borderWidth: 1.5,
-    padding: 10,
-    marginBottom: 5,
-  },
+export const Title = styled.Text`
+  font-size: 48px;
+  font-family: 'Bangers';
+  text-align: center;
+  color: #f8f6f6;
+  padding: 0 10px;
+`;
 
-  input: {
-    flex: 1,
-  },
+export const Form = styled.View`
+  align-self: stretch;
+  margin-top: 50px;
+  padding: 0 15px;
+`;
 
-  button: {
-    height: 52,
-    backgroundColor: '#F8F6F6',
-    borderRadius: 10,
-    borderColor: '#000',
-    borderWidth: 1.5,
-    padding: 10,
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
+export const FormInput = styled(Input)`
+  margin-bottom: 5px;
+`;
 
-  buttonText: {
-    color: '#000',
-    fontSize: 15,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontFamily: 'Abel',
-  },
+export const SubmitButton = styled(Button)`
+  margin-top: 5px;
+`;
 
-  link: {
-    color: '#F8F6F6',
-    fontFamily: 'Abel',
-    textAlign: 'center',
-  },
-});
+export const SignLink = styled.TouchableOpacity`
+  margin-top: 30px;
+`;
+
+export const SignLinkText = styled.Text`
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: 'Abel';
+`;

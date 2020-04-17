@@ -1,78 +1,68 @@
-/* eslint-disable no-undef */
-import React from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { useFonts } from '@use-expo/font';
+import React, { useState, useRef } from 'react';
 
 import Background from '../../components/Background';
-import styles from './styles';
+import api from '../../services/api';
+import deviceStorage from '../../services/deviceStorage';
+
+import {
+  Container,
+  Title,
+  Form,
+  FormInput,
+  SubmitButton,
+  SignLink,
+  SignLinkText,
+} from './styles';
 
 export default function Login({ navigation }) {
-  let [isLoadFonts] = useFonts({
-    Bangers: require('../../assets/fonts/Bangers/Bangers-Regular.ttf'),
-    Abel: require('../../assets/fonts/Abel/Abel-Regular.ttf'),
-  });
+  const passwordRef = useRef();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  if (!isLoadFonts) {
-    return <Text>Fontes não carregaram</Text>;
-  } else {
-    return (
-      <Background>
-        <View style={styles.container}>
-          <Text style={styles.title}>Trade Madden</Text>
-
-          <View>
-            <View style={styles.inputIcon}>
-              <Icon
-                name="user"
-                size={30}
-                color="#118DF0"
-                style={{ marginRight: 10 }}
-              ></Icon>
-              <TextInput
-                style={styles.input}
-                placeholder="Usuário"
-                autoCapitalize="none"
-              />
-            </View>
-
-            <View style={[styles.inputIcon, { marginVertical: 5 }]}>
-              <Icon
-                name="lock"
-                size={34}
-                color="#118DF0"
-                style={{ marginRight: 10 }}
-              ></Icon>
-              <TextInput
-                style={styles.input}
-                secureTextEntry
-                placeholder="Senha"
-                autoCapitalize="none"
-              />
-            </View>
-
-            <TouchableOpacity
-              style={[styles.button, { marginTop: 10 }]}
-              onPress={() => navigation.navigate('Profile')}
-            >
-              <Text style={styles.buttonText}>Entrar</Text>
-            </TouchableOpacity>
-          </View>
-
-          <Icon.Button
-            name="facebook"
-            backgroundColor="#3b5998"
-            borderRadius={10}
-            style={styles.facebookButton}
-          >
-            <Text style={styles.buttonFacebookText}>Entrar com Facebook</Text>
-          </Icon.Button>
-
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.link}>Não tem conta? Crie aqui</Text>
-          </TouchableOpacity>
-        </View>
-      </Background>
-    );
+  async function handleLogin() {
+    await api
+      .post('/sessions/token', {
+        username,
+        password,
+      })
+      .then(({ data }) => {
+        deviceStorage.saveKey('token', data.token);
+        deviceStorage.saveKey('refreshToken', data.refreshToken);
+      })
+      .catch(() => {
+        // Handle returned errors here
+      });
   }
+
+  return (
+    <Background>
+      <Container>
+        <Title>Trade Madden</Title>
+
+        <Form>
+          <FormInput
+            icon="account-box"
+            placeholder="Usuário"
+            autoCorrect={false}
+            autoCapitalize="none"
+            returnKeyType="next"
+            onSubmitEditing={() => passwordRef.current.focus()}
+          />
+          <FormInput
+            icon="lock-outline"
+            placeholder="Senha"
+            secureTextEntry
+            ref={passwordRef}
+            returnKeyType="send"
+            onSubmitEditing={handleLogin}
+          />
+          <SubmitButton onPress={handleLogin}>Entrar</SubmitButton>
+        </Form>
+
+        <SignLink onPress={() => navigation.navigate('Register')}>
+          <SignLinkText>Não tem conta? Crie aqui</SignLinkText>
+        </SignLink>
+      </Container>
+    </Background>
+  );
 }

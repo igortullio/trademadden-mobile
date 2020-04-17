@@ -1,92 +1,77 @@
-/* eslint-disable react/prop-types */
-import React from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { useRef } from 'react';
 
 import Background from '../../components/Background';
-import styles from './styles';
+
+import {
+  Container,
+  Title,
+  Form,
+  FormInput,
+  SubmitButton,
+  SignLink,
+  SignLinkText,
+} from './styles';
 
 export default function Register({ navigation }) {
+  const nameRef = useRef();
+  const phoneRef = useRef();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
+
   return (
     <Background>
-      <View style={styles.container}>
-        <Text style={styles.title}>Cadastro</Text>
+      <Container>
+        <Title>Cadastro</Title>
 
-        <View style={styles.containerLogin}>
-          <View style={styles.inputIcon}>
-            <Icon
-              name="user"
-              size={30}
-              color="#118DF0"
-              style={{ marginRight: 10 }}
-            ></Icon>
-            <TextInput
-              style={styles.input}
-              placeholder="Usuário"
-              autoCapitalize="none"
-            />
-          </View>
+        <Form>
+          <FormInput
+            icon="account-box"
+            placeholder="Usuário"
+            autoCorrect={false}
+            autoCapitalize="none"
+            returnKeyType="next"
+            onSubmitEditing={() => nameRef.current.focus()}
+          />
+          <FormInput
+            icon="face"
+            placeholder="Nome"
+            autoCorrect={true}
+            autoCapitalize="words"
+            ref={nameRef}
+            returnKeyType="next"
+            onSubmitEditing={() => phoneRef.current.focus()}
+          />
+          <FormInput
+            icon="call"
+            placeholder="Telefone"
+            keyboardType="phone-pad"
+            ref={phoneRef}
+            returnKeyType="next"
+            onSubmitEditing={() => passwordRef.current.focus()}
+          />
+          <FormInput
+            icon="lock-outline"
+            placeholder="Senha"
+            secureTextEntry
+            ref={passwordRef}
+            returnKeyType="next"
+            onSubmitEditing={() => confirmPasswordRef.current.focus()}
+          />
+          <FormInput
+            icon="lock-outline"
+            placeholder="Confirmar senha"
+            secureTextEntry
+            ref={confirmPasswordRef}
+            returnKeyType="send"
+            onSubmitEditing={() => {}}
+          />
+          <SubmitButton onPress={() => {}}>Cadastrar</SubmitButton>
+        </Form>
 
-          <View style={styles.inputIcon}>
-            <Icon
-              name="mobile"
-              size={30}
-              color="#118DF0"
-              style={{ marginRight: 13, marginLeft: 5 }}
-            ></Icon>
-            <TextInput
-              style={styles.input}
-              placeholder="Telefone"
-              keyboardType="phone-pad"
-              autoCapitalize="none"
-            />
-          </View>
-
-          <View style={styles.inputIcon}>
-            <Icon
-              name="lock"
-              size={34}
-              color="#118DF0"
-              style={{ marginRight: 10 }}
-            ></Icon>
-            <TextInput
-              style={styles.input}
-              secureTextEntry
-              placeholder="Senha"
-              autoCapitalize="none"
-            />
-          </View>
-
-          <View style={styles.inputIcon}>
-            <Icon
-              name="lock"
-              size={34}
-              color="#118DF0"
-              style={{ marginRight: 10 }}
-            ></Icon>
-            <TextInput
-              style={styles.input}
-              secureTextEntry
-              placeholder="Confirme a senha"
-              autoCapitalize="none"
-            />
-          </View>
-
-          <TouchableOpacity style={[styles.button, { marginTop: 10 }]}>
-            <Text style={styles.buttonText}>Cadastrar</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.containerFacebook}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Cadastrar com Facebook</Text>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.link}>Já tem conta? Entre</Text>
-        </TouchableOpacity>
-      </View>
+        <SignLink onPress={() => navigation.navigate('Login')}>
+          <SignLinkText>Já tem conta? Entre</SignLinkText>
+        </SignLink>
+      </Container>
     </Background>
   );
 }
