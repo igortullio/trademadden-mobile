@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Background from '../../components/Background';
-import api from '../../services/api';
-import deviceStorage from '../../services/deviceStorage';
+import { signInRequest } from '../../store/modules/auth/actions';
 
 import {
   Container,
@@ -14,24 +14,18 @@ import {
   SignLinkText,
 } from './styles';
 
-export default function Login({ navigation }) {
+export default function SignIn({ navigation }) {
+  const dispatch = useDispatch();
+
   const passwordRef = useRef();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  async function handleLogin() {
-    await api
-      .post('/sessions/token', {
-        username,
-        password,
-      })
-      .then(({ data }) => {
-        deviceStorage.saveKey('token', data.token);
-        deviceStorage.saveKey('refreshToken', data.refreshToken);
-      })
-      .catch(() => {
-        // Handle returned errors here
-      });
+  const loading = useSelector((state) => state.auth.loading);
+
+  function handleSignIn() {
+    dispatch(signInRequest(username, password));
   }
 
   return (
@@ -47,6 +41,8 @@ export default function Login({ navigation }) {
             autoCapitalize="none"
             returnKeyType="next"
             onSubmitEditing={() => passwordRef.current.focus()}
+            value={username}
+            onChangeText={setUsername}
           />
           <FormInput
             icon="lock-outline"
@@ -54,12 +50,16 @@ export default function Login({ navigation }) {
             secureTextEntry
             ref={passwordRef}
             returnKeyType="send"
-            onSubmitEditing={handleLogin}
+            onSubmitEditing={handleSignIn}
+            value={password}
+            onChangeText={setPassword}
           />
-          <SubmitButton onPress={handleLogin}>Entrar</SubmitButton>
+          <SubmitButton loading={loading} onPress={handleSignIn}>
+            Entrar
+          </SubmitButton>
         </Form>
 
-        <SignLink onPress={() => navigation.navigate('Register')}>
+        <SignLink onPress={() => navigation.navigate('SignUp')}>
           <SignLinkText>Não tem conta? Crie aqui</SignLinkText>
         </SignLink>
       </Container>
