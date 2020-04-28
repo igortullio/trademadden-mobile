@@ -15,17 +15,18 @@ export function* signIn({ payload }) {
 
     yield put(signInSuccess(token));
   } catch (err) {
-    Alert.alert('Falha na autenticação, verifique seus dados');
+    const message = err.response.data.map((e) => e.message).join('\n');
+    Alert.alert('Falha na autenticação', message);
     yield put(signFailure());
   }
 }
 
 export function* signUp({ payload }) {
   try {
-    yield call(api.post, 'users', { payload });
+    yield call(api.post, 'users', payload);
   } catch (err) {
-    Alert.alert('Falha no cadastro, verifique seus dados!');
-
+    const message = err.response.data.map((e) => e.message).join('\n');
+    Alert.alert('Falha no cadastro', message);
     yield put(signFailure());
   }
 }
