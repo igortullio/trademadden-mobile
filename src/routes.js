@@ -3,7 +3,9 @@ import { useFonts } from '@use-expo/font';
 
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+
 import Profile from './pages/Profile';
+import League from './pages/League';
 
 export default (isSigned = false) => {
   useFonts({
@@ -19,6 +21,7 @@ export default (isSigned = false) => {
           SignUp,
         }),
         App: createSwitchNavigator({
+          League,
           Profile,
         }),
       },

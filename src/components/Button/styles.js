@@ -8,7 +8,7 @@ export const Container = styled(RectButton)`
   justify-content: center;
   align-content: center;
 
-  border-radius: 10;
+  border-radius: 10px;
   border-color: #000;
   border-width: 1.5px;
 `;
